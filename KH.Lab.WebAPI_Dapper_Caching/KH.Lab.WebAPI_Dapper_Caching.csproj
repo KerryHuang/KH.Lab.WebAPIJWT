@@ -7,9 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspectCore.Extensions.AspectScope" Version="2.4.0" />
+    <PackageReference Include="Autofac" Version="7.0.1" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Dapper" Version="2.0.143" />
     <PackageReference Include="Dapper.Extensions.Caching.Memory" Version="4.2.4" />
     <PackageReference Include="Dapper.Extensions.Caching.Redis" Version="4.2.4" />
+    <PackageReference Include="Dapper.Extensions.MiniProfiler" Version="4.2.4" />
+    <PackageReference Include="Dapper.Extensions.NetCore" Version="4.2.4" />
     <PackageReference Include="Dapper.Extensions.SQLite" Version="4.2.4" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.10" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />

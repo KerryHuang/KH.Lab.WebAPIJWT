@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using System.Text;
+using Dapper.Extensions;
 
 namespace KH.Lab.WebAPI_Dapper_Caching.Controllers
 {
@@ -9,6 +10,13 @@ namespace KH.Lab.WebAPI_Dapper_Caching.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
+        private IDapper dapper { get; }
+
+        public StudentController(IDapper dapper)
+        {
+            this.dapper = dapper;
+        }
+
         /// <summary>
         /// 檢查有沒有sqlite檔案，沒有就新增，並增加一筆資料
         /// </summary>
@@ -17,7 +25,7 @@ namespace KH.Lab.WebAPI_Dapper_Caching.Controllers
         public async Task<IActionResult> InsertAsync()
         {
             //連接sqlite資料庫
-            using var conn = new SqliteConnection("Data Source=Student.sqlite");
+            //using var conn = new SqliteConnection("Data Source=Student.sqlite");
             var SQL = new StringBuilder();
             //當找不到sqlite檔案時，建立新表，新表創建後就會產生sqlite檔案了
             //if (System.IO.File.Exists(@".\Student.sqlite"))
@@ -31,7 +39,7 @@ namespace KH.Lab.WebAPI_Dapper_Caching.Controllers
             //    //Age欄位設定為int
             //    SQL.Append("Age INTEGER) \n");
             //    //執行sql語法
-            //    await conn.ExecuteAsync(SQL.ToString());
+            //    await Dapper.ExecuteAsync(SQL.ToString());
             //    //清除字串內的值
             //    SQL.Clear();
             //}
@@ -44,7 +52,7 @@ namespace KH.Lab.WebAPI_Dapper_Caching.Controllers
             //參數2
             parameters.Add("Age", 20);
             //執行語法，insert一筆資料到Student
-            var Result = await conn.ExecuteAsync(SQL.ToString(), parameters);
+            var Result = await dapper.ExecuteAsync(SQL.ToString(), parameters);
             //回傳執行成功的數量
             return Ok(Result);
         }
@@ -57,12 +65,12 @@ namespace KH.Lab.WebAPI_Dapper_Caching.Controllers
         public async Task<IActionResult> NoCacheSelectAsync()
         {
             //連接sqlite資料庫
-            using var conn = new SqliteConnection("Data Source=Student.sqlite");
+            //using var conn = new SqliteConnection("Data Source=Student.sqlite");
             var SQL = new StringBuilder();
             //組語法
             SQL.Append("select * from Student");
             //執行，並且將執行結果存為強型別
-            var Result = await conn.QueryAsync<Student>(SQL.ToString());
+            var Result = await dapper.QueryAsync<Student>(SQL.ToString());
             //回傳結果
             return Ok(Result);
         }
@@ -76,16 +84,16 @@ namespace KH.Lab.WebAPI_Dapper_Caching.Controllers
         public async Task<IActionResult> AnySelectAsync()
         {
             //連接sqlite資料庫
-            using var conn = new SqliteConnection("Data Source=Student.sqlite");
+            //using var conn = new SqliteConnection("Data Source=Student.sqlite");
             var SQL = new StringBuilder();
             //組語法
             SQL.Append("select * from Student");
             //執行，並且將執行結果存為強型別
-            var Result = await conn.QueryAsync<Student>(SQL.ToString());
+            var Result = await dapper.QueryAsync<Student>(SQL.ToString());
             //回傳結果
             return Ok(Result);
         }
-        
+
         /// <summary>
         /// 取得Student資料
         /// </summary>
@@ -96,12 +104,12 @@ namespace KH.Lab.WebAPI_Dapper_Caching.Controllers
         public async Task<IActionResult> AnySelectByIdAsync(int id)
         {
             //連接sqlite資料庫
-            using var conn = new SqliteConnection("Data Source=Student.sqlite");
+            //using var conn = new SqliteConnection("Data Source=Student.sqlite");
             var SQL = new StringBuilder();
             //組語法
             SQL.Append("select * from Student where Id = @id");
             //執行，並且將執行結果存為強型別
-            var Result = await conn.QueryAsync<Student>(SQL.ToString(), new { id });
+            var Result = await dapper.QueryAsync<Student>(SQL.ToString(), new { id });
             //回傳結果
             return Ok(Result);
         }
@@ -116,38 +124,34 @@ namespace KH.Lab.WebAPI_Dapper_Caching.Controllers
         public async Task<IActionResult> UserAgentSelectByIdAsync(int id)
         {
             //連接sqlite資料庫
-            using var conn = new SqliteConnection("Data Source=Student.sqlite");
+            //using var conn = new SqliteConnection("Data Source=Student.sqlite");
             var SQL = new StringBuilder();
             //組語法
             SQL.Append("select * from Student where Id = @id");
             //執行，並且將執行結果存為強型別
-            var Result = await conn.QueryAsync<Student>(SQL.ToString(), new { id });
+            var Result = await dapper.QueryAsync<Student>(SQL.ToString(), new { id });
             //回傳結果
             return Ok(Result);
         }
-
 
         /// <summary>
         /// 取得Student所有資料
         /// </summary>
         /// <returns></returns>
         [HttpGet("DapperCacheSelectAsync")]
-        [ResponseCache(Duration = 30, Location = ResponseCacheLocation.Any)]
+        //[ResponseCache(Duration = 30, Location = ResponseCacheLocation.Any)]
         public async Task<IActionResult> DapperCacheSelectAsync()
         {
             //連接sqlite資料庫
-            using var conn = new SqliteConnection("Data Source=Student.sqlite");
+            //using var conn = new SqliteConnection("Data Source=Student.sqlite");
             var SQL = new StringBuilder();
             //組語法
-            SQL.Append("select * from Student");            
+            SQL.Append("select * from Student");
             //執行，並且將執行結果存為強型別
-            var Result = await conn.QueryAsync<Student>(sql: SQL.ToString(), commandType: System.Data.CommandType.Text);
-
-
+            var Result = await dapper.QueryAsync<Student>(sql: SQL.ToString(), commandType: System.Data.CommandType.Text, enableCache: true, forceUpdateCache: true);
             //回傳結果
             return Ok(Result);
         }
-
 
         /// <summary>
         /// 學生
