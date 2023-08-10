@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33801.468
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KH.Lab.WebAPIJWT", "KH.Lab.WebAPIJWT\KH.Lab.WebAPIJWT.csproj", "{C7024B37-5C6C-43A3-AE85-BF63A9BE6335}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KH.Lab.WebAPI_Dapper_Caching", "KH.Lab.WebAPI_Dapper_Caching\KH.Lab.WebAPI_Dapper_Caching.csproj", "{9133E59D-A51B-4E00-B4E3-96B06E3D9F79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KH.Lab.WebAPI_Dapper_Caching", "KH.Lab.WebAPI_Dapper_Caching\KH.Lab.WebAPI_Dapper_Caching.csproj", "{9133E59D-A51B-4E00-B4E3-96B06E3D9F79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,9 @@
-using Autofac.Core;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Dapper.Extensions.Caching.Memory;
+using Dapper.Extensions.Caching.Redis;
 using Dapper.Extensions.SQLite;
+using KH.Lab.WebAPI_Dapper_Caching;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,20 +11,39 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDapperForSQLite();
-
-#region ResponseCache
-builder.Services.AddResponseCaching();
+#region Add Dapper
+builder.Services.AddDapperForSQLite(monitorBuilder =>
+{
+    monitorBuilder.Threshold = 10;
+    monitorBuilder.EnableLog = true;
+    monitorBuilder.AddMonitorHandler<MyMonitorHandler>();
+});
 #endregion
 
-#if DAPPER_EXTENSIONS_CACHE_MEMORY
-
-#endif
-
-builder.Services.AddDapperCachingInMemory(new MemoryConfiguration
+#region Enable Caching
+// Response Cache
+builder.Services.AddResponseCaching();
+// Memory Cache
+builder.Services.AddMemoryCache();
+// Dapper Memory Cache
+//builder.Services.AddDapperCachingInMemory(new MemoryConfiguration
+//{
+//    AllMethodsEnableCache = false,
+//    Expire = TimeSpan.FromSeconds(30)
+//});
+// Dapper Redis Cache 
+builder.Services.AddDapperCachingInRedis(new RedisConfiguration()
 {
-    AllMethodsEnableCache = false
+    AllMethodsEnableCache = false,
+    Expire = TimeSpan.FromSeconds(30),
+    ConnectionString = builder.Configuration["RedisURL"]
 });
+#endregion
+
+#region Autofac
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutofacModuleRegister()));
+#endregion
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
