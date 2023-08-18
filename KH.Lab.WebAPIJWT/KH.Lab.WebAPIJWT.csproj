@@ -26,7 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Prescoec\Presco.Utility\Presco.Utility.Caching.Memory\Presco.Utility.Caching.Memory.csproj" />
     <ProjectReference Include="..\..\..\Prescoec\Presco.Utility\Presco.Utility.Caching.Redis\Presco.Utility.Caching.Redis.csproj" />
-    <ProjectReference Include="..\..\..\Prescoec\Presco.Utility\Presco.Utility\Presco.Utility.csproj" />
+    <ProjectReference Include="..\..\..\Prescoec\Presco.Utility\Presco.Utility.Caching\Presco.Utility.Caching.csproj" />
   </ItemGroup>
 
 </Project>
