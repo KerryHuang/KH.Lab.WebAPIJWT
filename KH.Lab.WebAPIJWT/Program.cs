@@ -3,6 +3,8 @@ using KH.Lab.WebAPIJWT.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Presco.Utility.Caching;
+using Presco.Utility.Caching.Redis;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,9 +46,29 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+// Custom Cache
 builder.Services.AddScoped<ICacheService, CacheService>();
+// Presco Cache
+builder.Services.AddPrescoCache();
+// Presco Cache in memory
+//builder.Services.AddPrescoCachingInMemory(new MemoryConfiguration
+//{
+//    AllMethodsEnableCache = false,
+//    Expire = TimeSpan.FromSeconds(30)
+//});
+// Presco Cache in Redis
+builder.Services.AddPrescoCachingInRedis(new RedisConfiguration
+{
+    AllMethodsEnableCache = false,
+    Expire = TimeSpan.FromMinutes(double.Parse(builder.Configuration["Redis:Expire"])),
+    KeyPrefix = builder.Configuration["Redis:KeyPrefix"],
+    ConnectionString = builder.Configuration["Redis:UrlConnection"]
+});
+
+
 builder.Services.AddDbContext<DbContextClass>();
-builder.Services.AddAuthentication(opt => {
+builder.Services.AddAuthentication(opt =>
+{
     opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
@@ -70,7 +92,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(options => {
+    app.UseSwaggerUI(options =>
+    {
         options.SwaggerEndpoint("/swagger/V1/swagger.json", "JWT WebAPI Lab");
     });
 }

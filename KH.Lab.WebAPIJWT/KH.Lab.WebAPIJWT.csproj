@@ -23,4 +23,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Prescoec\Presco.Utility\Presco.Utility.Caching.Memory\Presco.Utility.Caching.Memory.csproj" />
+    <ProjectReference Include="..\..\..\Prescoec\Presco.Utility\Presco.Utility.Caching.Redis\Presco.Utility.Caching.Redis.csproj" />
+    <ProjectReference Include="..\..\..\Prescoec\Presco.Utility\Presco.Utility\Presco.Utility.csproj" />
+  </ItemGroup>
+
 </Project>
