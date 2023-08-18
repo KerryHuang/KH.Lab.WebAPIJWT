@@ -35,8 +35,9 @@ builder.Services.AddMemoryCache();
 builder.Services.AddDapperCachingInRedis(new RedisConfiguration()
 {
     AllMethodsEnableCache = false,
-    Expire = TimeSpan.FromSeconds(30),
-    ConnectionString = builder.Configuration["RedisURL"]
+    Expire = TimeSpan.FromMinutes(double.Parse(builder.Configuration["Redis:Expire"])),
+    KeyPrefix = builder.Configuration["Redis:KeyPrefix"],
+    ConnectionString = builder.Configuration["Redis:UrlConnection"]
 });
 #endregion
 

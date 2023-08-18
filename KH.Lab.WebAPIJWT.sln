@@ -7,6 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KH.Lab.WebAPIJWT", "KH.Lab.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KH.Lab.WebAPI_Dapper_Caching", "KH.Lab.WebAPI_Dapper_Caching\KH.Lab.WebAPI_Dapper_Caching.csproj", "{9133E59D-A51B-4E00-B4E3-96B06E3D9F79}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utility", "Utility", "{FD1F3AE6-7621-494C-9F56-9CE77B6F66C4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presco.Utility", "..\..\Prescoec\Presco.Utility\Presco.Utility\Presco.Utility.csproj", "{7CCAD00B-1685-4310-BD2B-1E0AB38D3696}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presco.Utility.Caching.Memory", "..\..\Prescoec\Presco.Utility\Presco.Utility.Caching.Memory\Presco.Utility.Caching.Memory.csproj", "{AFD2C0C1-6246-44BF-B4A8-4AEEADDB4DDF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presco.Utility.Caching.Redis", "..\..\Prescoec\Presco.Utility\Presco.Utility.Caching.Redis\Presco.Utility.Caching.Redis.csproj", "{3B9467E7-7133-46A6-A4A5-3F516A81A8E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +29,26 @@ Global
 		{9133E59D-A51B-4E00-B4E3-96B06E3D9F79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9133E59D-A51B-4E00-B4E3-96B06E3D9F79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9133E59D-A51B-4E00-B4E3-96B06E3D9F79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CCAD00B-1685-4310-BD2B-1E0AB38D3696}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CCAD00B-1685-4310-BD2B-1E0AB38D3696}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CCAD00B-1685-4310-BD2B-1E0AB38D3696}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CCAD00B-1685-4310-BD2B-1E0AB38D3696}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFD2C0C1-6246-44BF-B4A8-4AEEADDB4DDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFD2C0C1-6246-44BF-B4A8-4AEEADDB4DDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFD2C0C1-6246-44BF-B4A8-4AEEADDB4DDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFD2C0C1-6246-44BF-B4A8-4AEEADDB4DDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B9467E7-7133-46A6-A4A5-3F516A81A8E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B9467E7-7133-46A6-A4A5-3F516A81A8E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B9467E7-7133-46A6-A4A5-3F516A81A8E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B9467E7-7133-46A6-A4A5-3F516A81A8E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7CCAD00B-1685-4310-BD2B-1E0AB38D3696} = {FD1F3AE6-7621-494C-9F56-9CE77B6F66C4}
+		{AFD2C0C1-6246-44BF-B4A8-4AEEADDB4DDF} = {FD1F3AE6-7621-494C-9F56-9CE77B6F66C4}
+		{3B9467E7-7133-46A6-A4A5-3F516A81A8E5} = {FD1F3AE6-7621-494C-9F56-9CE77B6F66C4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4322B92F-7F82-4D95-8A41-A83A4EBA0B06}
