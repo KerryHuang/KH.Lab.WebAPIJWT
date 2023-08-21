@@ -17,7 +17,7 @@ namespace KH.Lab.WebAPI_Dapper_Caching
         protected override void Load(ContainerBuilder builder)
         {
             builder.AddDapperForSQLite("DefaultConnection");
-
+            
             ////程式集註入業務服務
             //var IRepositoryApp = Assembly.Load("Presco.CAS.Repository");
             //var RepositoryApp = Assembly.Load("Presco.CAS.Repository");

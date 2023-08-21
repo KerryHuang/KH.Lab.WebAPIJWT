@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 
 #region Add Dapper
 builder.Services.AddDapperForSQLite(monitorBuilder =>
-{
+{    
     monitorBuilder.Threshold = 10;
     monitorBuilder.EnableLog = true;
     monitorBuilder.AddMonitorHandler<MyMonitorHandler>();
