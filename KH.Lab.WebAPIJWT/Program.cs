@@ -3,8 +3,8 @@ using KH.Lab.WebAPIJWT.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Presco.Utility.Caching;
 using Presco.Utility.Caching.Redis;
+using Presco.Utility.Cookie;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -46,10 +46,10 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+
+#region Cache
 // Custom Cache
 builder.Services.AddScoped<ICacheService, CacheService>();
-// Presco Cache
-builder.Services.AddPrescoCache();
 // Presco Cache in memory
 //builder.Services.AddPrescoCachingInMemory(new MemoryConfiguration
 //{
@@ -64,7 +64,15 @@ builder.Services.AddPrescoCachingInRedis(new RedisConfiguration
     KeyPrefix = builder.Configuration["Redis:KeyPrefix"],
     ConnectionString = builder.Configuration["Redis:UrlConnection"]
 });
+#endregion
 
+#region Cookie
+builder.Services.AddPrescoCookie(new CookieConfiguration()
+{
+    Expire = TimeSpan.FromMinutes(double.Parse(builder.Configuration["Cookie:Expire"])),
+    KeyPrefix = builder.Configuration["Cookie:KeyPrefix"]
+});
+#endregion
 
 builder.Services.AddDbContext<DbContextClass>();
 builder.Services.AddAuthentication(opt =>
