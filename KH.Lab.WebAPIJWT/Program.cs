@@ -1,5 +1,6 @@
 using KH.Lab.WebAPIJWT.Cache;
 using KH.Lab.WebAPIJWT.Data;
+using KH.Lab.WebAPIJWT.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -74,7 +75,11 @@ builder.Services.AddPrescoCookie(new CookieConfiguration()
 });
 #endregion
 
+#region EntityFramework
 builder.Services.AddDbContext<DbContextClass>();
+builder.Services.AddScoped<IProductService, ProductService>();
+#endregion
+
 builder.Services.AddAuthentication(opt =>
 {
     opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
