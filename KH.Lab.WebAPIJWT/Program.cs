@@ -4,6 +4,7 @@ using KH.Lab.WebAPIJWT.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Presco.Utility.Caching.Memory;
 using Presco.Utility.Caching.Redis;
 using Presco.Utility.Cookie;
 using System.Text;
@@ -93,9 +94,9 @@ builder.Services.AddAuthentication(opt =>
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = KH.Lab.WebAPIJWT.ConfigurationManager.AppSetting["JWT:ValidIssuer"],
-            ValidAudience = KH.Lab.WebAPIJWT.ConfigurationManager.AppSetting["JWT:ValidAudience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(KH.Lab.WebAPIJWT.ConfigurationManager.AppSetting["JWT:Secret"]))
+            ValidIssuer = KH.Lab.WebAPIJWT.ConfigurationManager.AppSetting["JsonWebTokenKeys:ValidIssuer"],
+            ValidAudience = KH.Lab.WebAPIJWT.ConfigurationManager.AppSetting["JsonWebTokenKeys:ValidAudience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(KH.Lab.WebAPIJWT.ConfigurationManager.AppSetting["JsonWebTokenKeys:IssuerSigningKey"]))
         };
     });
 
