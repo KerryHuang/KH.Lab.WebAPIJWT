@@ -20,13 +20,16 @@ namespace KH.Lab.WebAPIJWT.Controllers
             }
             if (user.UserName == "string" && user.Password == "string")
             {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ConfigurationManager.AppSetting["JWT:Secret"]));
-                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+                var key = Encoding.UTF8.GetBytes(ConfigurationManager.AppSetting["JsonWebTokenKeys:IssuerSigningKey"]);
+                DateTime expireTime = DateTime.Now.AddMinutes(double.Parse(ConfigurationManager.AppSetting["JsonWebTokenKeys:ExpirationTime"]));
+
+                //var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ConfigurationManager.AppSetting["JWT:Secret"]));
+                var signinCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
                 var tokeOptions = new JwtSecurityToken(
-                    issuer: ConfigurationManager.AppSetting["JWT:ValidIssuer"],
-                    audience: ConfigurationManager.AppSetting["JWT:ValidAudience"],
+                    issuer: ConfigurationManager.AppSetting["JsonWebTokenKeys:ValidIssuer"],
+                    audience: ConfigurationManager.AppSetting["JsonWebTokenKeys:ValidAudience"],
                     claims: new List<Claim>(),
-                    expires: DateTime.Now.AddMinutes(6),
+                    expires: new DateTimeOffset(expireTime).DateTime,
                     signingCredentials: signinCredentials
                 );
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
